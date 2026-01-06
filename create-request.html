@@ -6,7 +6,6 @@
     <title>إنشاء طلب | معينك</title>
 
     <style>
-        /* 1. المتغيرات اللونية الأساسية */
         :root {
             --blue-900: #0b2a6f;
             --blue-700: #1557c0;
@@ -18,7 +17,6 @@
             --radius: 20px;
         }
 
-        /* 2. إعدادات الصفحة المتجاوبة (Responsive Auto) */
         * {
             box-sizing: border-box;
         }
@@ -30,22 +28,22 @@
             background: radial-gradient(900px 500px at 70% 10%, rgba(255, 255, 255, .65), rgba(255, 255, 255, 0)),
                         linear-gradient(135deg, #dff0ff 0%, #bfe2ff 25%, #7fb9ff 55%, #2f6fe5 100%);
             display: flex;
-            justify-content: center; /* توسيط تلقائي */
+            justify-content: center;
             flex-direction: column;
-            padding: 20px; /* مسافة أمان للحواف */
+            padding: 20px;
         }
 
         .app {
             width: 100%;
-            max-width: 1100px; /* العرض الأقصى للكمبيوتر */
-            margin: 0 auto; /* توسيط الحاوية الكبرى */
+            max-width: 1100px;
+            margin: 0 auto;
             flex: 1;
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
 
-        /* 3. شريط التنقل المتجاوب */
+        /* NAVBAR */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -63,24 +61,25 @@
             gap: 10px;
             color: #fff;
             font-weight: 700;
-            font-size: clamp(20px, 5vw, 28px); /* خط مرن */
+            font-size: clamp(20px, 5vw, 28px);
         }
 
         .nav-brand img {
-            width: clamp(50px, 10vw, 70px); /* لوقو مرن */
+            width: clamp(50px, 10vw, 70px);
             height: auto;
             object-fit: contain;
         }
 
-        /* 4. بطاقة النموذج المتجاوبة */
+        /* CARD - الإصلاح هنا */
         .card {
             background: rgba(255, 255, 255, .94);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             width: 100%;
-            max-width: 520px; /* العرض الأقصى للكارد */
-            margin: auto; /* توسيط الكارد في المساحة المتاحة */
-            padding: clamp(20px, 5vw, 40px); /* حشوة داخلية مرنة */
+            max-width: 520px; 
+            margin: auto; 
+            /* تم تغيير الـ Padding ليصبح متساوياً وتلقائياً */
+            padding: clamp(20px, 5vw, 35px); 
         }
 
         .card h2 {
@@ -90,7 +89,7 @@
             font-size: clamp(22px, 6vw, 28px);
         }
 
-        /* 5. تنسيق الحقول المتجاوب */
+        /* FORM */
         label {
             display: block;
             font-weight: 700;
@@ -100,14 +99,14 @@
         }
 
         input, textarea {
-            width: 100%; /* العرض الآن 100% دائماً ليتناسب مع الكارد */
+            width: 100%; 
             padding: 12px 14px;
             border-radius: 12px;
             border: 1px solid rgba(15, 23, 42, .2);
             font-size: 16px;
             outline: none;
-            transition: 0.3s;
             background: #fff;
+            transition: 0.3s;
         }
 
         input:focus, textarea:focus {
@@ -120,7 +119,6 @@
             min-height: 90px;
         }
 
-        /* 6. رسائل التنبيه */
         .msg {
             margin-top: 20px;
             padding: 15px;
@@ -129,13 +127,11 @@
             font-weight: 700;
             text-align: center;
             font-size: 15px;
-            width: 100%;
         }
 
         .msg-success { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
         .msg-error { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
 
-        /* 7. الأزرار المتجاوبة */
         .actions {
             margin-top: 22px;
             display: flex;
@@ -150,7 +146,7 @@
             cursor: pointer;
             font-size: 16px;
             width: 100%;
-            transition: transform 0.2s, opacity 0.2s;
+            transition: 0.2s;
         }
 
         .btn:active { transform: scale(0.98); }
@@ -165,7 +161,7 @@
             align-items: center;
         }
 
-        /* 8. الفوتر المتجاوب */
+        /* FOOTER */
         .footer {
             margin-top: 20px; 
             background: rgba(255, 255, 255, .18);
@@ -199,11 +195,10 @@
         .socials a:hover { background: rgba(255, 255, 255, 0.35); }
         .socials img { width: 24px; height: 24px; object-fit: contain; }
 
-        /* 9. تحسينات الجوال الصغير */
         @media(max-width:480px) {
             body { padding: 10px; }
+            .card { padding: 20px; } /* تصغير الحشو الداخلي في الشاشات الصغيرة جداً */
             .navbar { padding: 10px; }
-            .btn { padding: 12px; font-size: 14px; }
         }
     </style>
 </head>
@@ -215,7 +210,7 @@
             <img src="LOGO_MUEENK2.png" alt="Logo">
             <span>معينك</span>
         </div>
-        <a href="index.html" class="btn btn-outline" style="width: auto; padding: 8px 15px;">الرجوع</a>
+        <a href="index.html" class="btn btn-back btn-outline" style="width: auto; padding: 8px 15px;">الرجوع</a>
     </nav>
 
     <div class="card">
@@ -282,7 +277,7 @@
         }
 
         if (!/^05\d{8}$/.test(ph)) {
-            displayFeedback("خطأ: رقم الجوال يجب أن يبدأ بـ 05.", true);
+            displayFeedback("خطأ: رقم الجوال يجب أن يبدأ بـ 05 ويتكون من 10 أرقام.", true);
             return;
         }
 
