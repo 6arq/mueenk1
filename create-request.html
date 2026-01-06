@@ -1,278 +1,312 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>إنشاء طلب | معينك</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>إنشاء طلب | معينك</title>
 
-  <style>
-    :root{
-      --blue-900:#0b2a6f;
-      --blue-700:#1557c0;
-      --blue-600:#1e88e5;
-      --text:#0f172a;
-      --muted:#64748b;
-      --card:#ffffff;
-      --shadow:0 16px 45px rgba(2,20,60,.20);
-      --radius:20px;
-    }
+    <style>
+        /* 1. المتغيرات اللونية الأساسية */
+        :root {
+            --blue-900: #0b2a6f;
+            --blue-700: #1557c0;
+            --blue-600: #1e88e5;
+            --text: #0f172a;
+            --muted: #64748b;
+            --card: #ffffff;
+            --shadow: 0 16px 45px rgba(2, 20, 60, .20);
+            --radius: 20px;
+        }
 
-    *{ box-sizing:border-box; }
+        /* 2. إعدادات الصفحة المتجاوبة (Responsive Auto) */
+        * {
+            box-sizing: border-box;
+        }
 
-    body{
-      margin-left: 25%;
-      margin-right: 25%;
-      font-family: Arial, sans-serif;
-      min-height:100vh;
-      background:
-        radial-gradient(900px 500px at 70% 10%, rgba(255,255,255,.65), rgba(255,255,255,0)),
-        linear-gradient(135deg,#dff0ff 0%,#bfe2ff 25%,#7fb9ff 55%,#2f6fe5 100%);
-      display:flex;
-      justify-content:center;
-      flex-direction:column;
-      padding:24px;
-    }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(900px 500px at 70% 10%, rgba(255, 255, 255, .65), rgba(255, 255, 255, 0)),
+                        linear-gradient(135deg, #dff0ff 0%, #bfe2ff 25%, #7fb9ff 55%, #2f6fe5 100%);
+            display: flex;
+            justify-content: center; /* توسيط تلقائي */
+            flex-direction: column;
+            padding: 20px; /* مسافة أمان للحواف */
+        }
 
-    .app{
-      width:min(1100px,100%);
-      flex:1;
-      display:flex;
-      flex-direction:column;
-    }
+        .app {
+            width: 100%;
+            max-width: 1100px; /* العرض الأقصى للكمبيوتر */
+            margin: 0 auto; /* توسيط الحاوية الكبرى */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    /* ===== NAVBAR ===== */
-    .navbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:120px;
-      background:rgba(255,255,255,.18);
-      border:1px solid rgba(42,102,230,.25);
-      border-radius:20px;
-      padding:6px 14px;
-    
-      
-    }
+        /* 3. شريط التنقل المتجاوب */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, .18);
+            border: 1px solid rgba(42, 102, 230, .25);
+            border-radius: 20px;
+            padding: 10px 20px;
+            backdrop-filter: blur(5px);
+        }
 
-    .nav-brand{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      color:#fff;
-      font-weight:700;
-      font-size:28px;
-    }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            font-weight: 700;
+            font-size: clamp(20px, 5vw, 28px); /* خط مرن */
+        }
 
-    .nav-brand img{
-      width:70px;
-      height:70px;
-      object-fit:contain;
-      background:none;
-      padding:0;
-      border-radius:0;
-    }
+        .nav-brand img {
+            width: clamp(50px, 10vw, 70px); /* لوقو مرن */
+            height: auto;
+            object-fit: contain;
+        }
 
-    .back-btn{
-      text-decoration:none;
-    }
+        /* 4. بطاقة النموذج المتجاوبة */
+        .card {
+            background: rgba(255, 255, 255, .94);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 520px; /* العرض الأقصى للكارد */
+            margin: auto; /* توسيط الكارد في المساحة المتاحة */
+            padding: clamp(20px, 5vw, 40px); /* حشوة داخلية مرنة */
+        }
 
-    /* ===== CARD ===== */
-    .card{
-      background:rgba(255,255,255,.94);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      max-width:520px;
-      margin:0 auto;
-      padding:30px;
-      padding-left: 200px;
-      padding-right: 50px;
-    }
+        .card h2 {
+            text-align: center;
+            color: var(--blue-900);
+            margin-bottom: 22px;
+            font-size: clamp(22px, 6vw, 28px);
+        }
 
-    .card h2{
-      text-align:center;
-      color:var(--blue-900);
-      margin-bottom:22px;
-      padding-right: 120px;
-    }
+        /* 5. تنسيق الحقول المتجاوب */
+        label {
+            display: block;
+            font-weight: 700;
+            font-size: 16px;
+            margin: 14px 0 6px;
+            color: #0b2248;
+        }
 
-    /* ===== FORM ===== */
-    label{
-      display:block;
-      font-weight:700;
-      font-size: 17px;
-      margin:14px 0 6px;
-      color:#0b2248;
-    }
+        input, textarea {
+            width: 100%; /* العرض الآن 100% دائماً ليتناسب مع الكارد */
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(15, 23, 42, .2);
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+            background: #fff;
+        }
 
-    input, textarea{
-      width:150%;
-      padding:12px 14px;
-      border-radius:12px;
-      border:1px solid rgba(15,23,42,.2);
-      font-size:19px;
-    }
+        input:focus, textarea:focus {
+            border-color: var(--blue-600);
+            box-shadow: 0 0 0 4px rgba(30, 136, 229, .15);
+        }
 
-    textarea{
-      resize:vertical;
-      min-height:90px;
-    }
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
 
-    input:focus, textarea:focus{
-      outline:none;
-      border-color:var(--blue-600);
-      box-shadow:0 0 0 4px rgba(30,136,229,.15);
-    }
+        /* 6. رسائل التنبيه */
+        .msg {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            display: none;
+            font-weight: 700;
+            text-align: center;
+            font-size: 15px;
+            width: 100%;
+        }
 
-    .actions{
-      margin-top:22px;
-      display:flex;
-      gap:12px;
-    }
+        .msg-success { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .msg-error { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
 
-    .btn{
-      border:0;
-      padding:16px;
-      border-radius:18px;
-      font-weight:800;
-      cursor:pointer;
-      font-size:16px;
-      width:100%;
-      padding-left: 60 ;
-    }
+        /* 7. الأزرار المتجاوبة */
+        .actions {
+            margin-top: 22px;
+            display: flex;
+            gap: 12px;
+        }
 
-    .btn-primary{
-      background:var(--blue-600);
-      color:#fff;
-      padding:20 ;
-    }
+        .btn {
+            border: 0;
+            padding: 16px;
+            border-radius: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: transform 0.2s, opacity 0.2s;
+        }
 
-    .btn-outline{
-      background:#fff;
-      color:var(--blue-700);
-      border:2px solid rgba(21,87,192,.35);
-    }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: var(--blue-600); color: #fff; }
+        .btn-outline {
+            background: #fff;
+            color: var(--blue-700);
+            border: 2px solid rgba(21, 87, 192, .35);
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .btn:hover{ opacity:.95; }
+        /* 8. الفوتر المتجاوب */
+        .footer {
+            margin-top: 20px; 
+            background: rgba(255, 255, 255, .18);
+            border: 1px solid rgba(255, 255, 255, .25);
+            border-radius: 18px;
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+        }
 
-    /* ===== FOOTER ===== */
-    .footer{
-      margin-top:auto; 
-      background:rgba(255,255,255,.18);
-      border:1px solid rgba(255,255,255,.25);
-      border-radius:18px;
-      backdrop-filter:blur(10px);
-      padding:16px 20px;
-      text-align:center;
-    }
+        .footer p { margin: 0 0 12px; color: #fff; font-weight: 600; }
 
-    .footer p{
-      margin:0 0 12px;
-      color:#fff;
-      font-weight:600;
-    }
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
 
-    .socials{
-      display:flex;
-      justify-content:center;
-      gap:16px;
-      flex-wrap:wrap;
-    }
+        .socials a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
+        }
 
-    .socials a{
-      text-decoration:none;
-      color:#fff;
-      font-size:22px;
-      padding:10px 14px;
-      border-radius:14px;
-      background:rgba(255,255,255,.2);
-      transition:.2s;
-    }
-    .socials img{
-  width:28px;      /* ← صغّر هنا */
-  height:28px;
-  object-fit:contain;
-  display:block;
-}
+        .socials a:hover { background: rgba(255, 255, 255, 0.35); }
+        .socials img { width: 24px; height: 24px; object-fit: contain; }
 
-
-    .socials a:hover{
-      background:rgba(255,255,255,.35);
-    }
-    
-    @media(max-width:600px){
-      body{ padding:20px; }
-      .card{ max-width:100%; }
-    }
-  </style>
+        /* 9. تحسينات الجوال الصغير */
+        @media(max-width:480px) {
+            body { padding: 10px; }
+            .navbar { padding: 10px; }
+            .btn { padding: 12px; font-size: 14px; }
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="app">
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="LOGO_MUEENK2.png" alt="Logo">
+            <span>معينك</span>
+        </div>
+        <a href="index.html" class="btn btn-outline" style="width: auto; padding: 8px 15px;">الرجوع</a>
+    </nav>
 
-  <!-- ===== NAVBAR ===== -->
-  <nav class="navbar">
-    <div class="nav-brand">
-      <img src="LOGO_MUEENK2.png" alt="Maeenak Logo">
-      معينك
+    <div class="card">
+        <h2>إنشاء طلب دواء</h2>
+        
+        <form id="requestForm" autocomplete="on">
+            <label for="fullName">الاسم الكامل</label>
+            <input type="text" name="name" id="fullName" placeholder="مثال: محمد أحمد" required autocomplete="name">
+
+            <label for="medicalFile">رقم الملف الطبي</label>
+            <input type="text" name="file" id="medicalFile" placeholder="12345" required>
+
+            <label for="nationalId">رقم الهوية</label>
+            <input type="text" name="idnum" id="nationalId" maxlength="10" placeholder="10 أرقام" required autocomplete="username">
+
+            <label for="address">العنوان الوطني</label>
+            <input type="text" name="addr" id="address" placeholder="جدة - حي ..." required autocomplete="street-address">
+
+            <label for="phone">رقم الجوال</label>
+            <input type="text" name="phone" id="phone" placeholder="05xxxxxxxx" required autocomplete="tel">
+
+            <label for="notes">ملاحظات (اختياري)</label>
+            <textarea id="notes" name="notes" placeholder="اكتب أي ملاحظة هنا..."></textarea>
+
+            <div id="statusMsg" class="msg"></div>
+
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">إرسال الطلب</button>
+                <a href="index.html" class="btn btn-outline">إلغاء</a>
+            </div>
+        </form>
     </div>
 
-    <a href="index.html" class="back-btn">
-      <button class="btn btn-outline">الرجوع</button>
-    </a>
-  </nav>
-
-  <!-- ===== FORM CARD ===== -->
-  <div class="card">
-    <h2>إنشاء طلب دواء</h2>
-
-    <form>
-      <label>الاسم الكامل</label>
-      <input type="text" placeholder="مثال: محمد أحمد" required>
-
-      <label>رقم الملف الطبي</label>
-      <input type="text" placeholder="12345" required>
-
-      <label>رقم الهوية</label>
-      <input type="text" maxlength="10" placeholder="10 أرقام" required>
-
-      <label>العنوان الوطني</label>
-      <input type="text" placeholder="جدة - حي ..." required>
-
-      <label>رقم الجوال</label>
-      <input type="text" placeholder="05xxxxxxxx" required>
-
-      <label>ملاحظات (اختياري)</label>
-      <textarea placeholder="اكتب أي ملاحظة هنا..."></textarea>
-
-      <div class="actions">
-        <button type="submit" class="btn btn-primary">إرسال الطلب</button>
-        <a href="index.html" style="flex:1">
-          <button type="button" class="btn btn-outline">إلغاء</button>
-        </a>
-      </div>
-    </form>
-  </div>
-    <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <p>تواصل معنا</p>
-    <div class="socials">
-      <a href="https://www.instagram.com/6arq0/" title="Instagram">
-        <img src="Instagram_logo_2022.svg" alt="Instagram">
-      </a>
-      <a href="#" title="Twitter / X">
-        <img src="X_logo_2023.svg" alt="Instagram">
-      </a>
-      <a href="https://wa.me/966500000000" title="WhatsApp">
-        <img src="WhatsApp_logo-color-vertical.svg" alt="Instagram">
-      </a>
-      <a href="mailto:info@mueenk.com" title="Email">
-        <img src="gmail.png" alt="Instagram">
-      </a>
-    </div>
-  </footer>
+    <footer class="footer">
+        <p>تواصل معنا</p>
+        <div class="socials">
+            <a href="https://www.instagram.com/6arq0/" title="Instagram"><img src="Instagram_logo_2022.svg" alt="IG"></a>
+            <a href="#" title="Twitter / X"><img src="X_logo_2023.svg" alt="X"></a>
+            <a href="https://wa.me/966500000000" title="WhatsApp"><img src="WhatsApp_logo-color-vertical.svg" alt="WA"></a>
+            <a href="mailto:info@mueenk.com" title="Email"><img src="gmail.png" alt="Email"></a>
+        </div>
+    </footer>
 </div>
+
+<script>
+    const STORAGE_KEY = "maeenak_requests_v1";
+    const form = document.getElementById("requestForm");
+    const statusMsg = document.getElementById("statusMsg");
+
+    function displayFeedback(text, isError = false) {
+        statusMsg.textContent = text;
+        statusMsg.className = "msg " + (isError ? "msg-error" : "msg-success");
+        statusMsg.style.display = "block";
+    }
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const nid = document.getElementById("nationalId").value.trim();
+        const ph = document.getElementById("phone").value.trim();
+
+        if (!/^\d{10}$/.test(nid)) {
+            displayFeedback("خطأ: رقم الهوية يجب أن يتكون من 10 أرقام.", true);
+            return;
+        }
+
+        if (!/^05\d{8}$/.test(ph)) {
+            displayFeedback("خطأ: رقم الجوال يجب أن يبدأ بـ 05.", true);
+            return;
+        }
+
+        const newRequest = {
+            id: "REQ-" + Math.random().toString(36).substring(2, 8).toUpperCase(),
+            fullName: document.getElementById("fullName").value.trim(),
+            medicalFile: document.getElementById("medicalFile").value.trim(),
+            nationalId: nid,
+            address: document.getElementById("address").value.trim(),
+            phone: ph,
+            notes: document.getElementById("notes").value.trim(),
+            status: "قيد المراجعة",
+            createdAt: new Date().toISOString()
+        };
+
+        const existingRequests = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        existingRequests.push(newRequest);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(existingRequests));
+        localStorage.setItem("maeenak_last_request_id", newRequest.id);
+
+        displayFeedback("تم إرسال طلبك بنجاح ✅ رقم الطلب: " + newRequest.id);
+        form.reset();
+    });
+</script>
 
 </body>
 </html>
-
