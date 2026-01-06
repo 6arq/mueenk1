@@ -1,214 +1,324 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mueenk | معينك</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mueenk | معينك</title>
 
-  <style>
-    :root{
-      --blue-900:#0b2a6f;
-      --blue-700:#1557c0;
-      --blue-600:#1e88e5;
-      --text:#0f172a;
-      --muted:#64748b;
-      --card:#ffffff;
-      --shadow:0 16px 45px rgba(2,20,60,.20);
-      --radius:20px;
-    }
+    <style>
+        :root {
+            --blue-900: #0b2a6f;
+            --blue-700: #1557c0;
+            --blue-600: #1e88e5;
+            --text: #0f172a;
+            --muted: #64748b;
+            --card: #ffffff;
+            --shadow: 0 16px 45px rgba(2, 20, 60, .20);
+            --radius: 20px;
+        }
 
-    *{ box-sizing:border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
-    body{
-      margin: 0;
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-      background:
-        radial-gradient(900px 500px at 70% 10%, rgba(255,255,255,.65), rgba(255,255,255,0)),
-        linear-gradient(135deg,#dff0ff 0%,#bfe2ff 25%,#7fb9ff 55%,#2f6fe5 100%);
-      display: flex;
-      justify-content: center;
-      padding: 20px; /* مسافة أمان صغيرة من الحواف */
-    }
+        /* ===== شاشة التحميل (Splash Screen) ===== */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #ffffff 0%, #dff0ff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
 
-    .app{
-      /* جعل العرض يتكيف آلياً: 1100px كحد أقصى، و 100% للشاشات الصغيرة */
-      width: 100%;
-      max-width: 1100px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+        .loading-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            animation: pulse 2s infinite ease-in-out;
+        }
 
-    /* ===== NAVBAR ===== */
-    .navbar{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(42,102,230,.25);
-      border-radius: 20px;
-      padding: 10px 20px;
-      backdrop-filter: blur(5px);
-    }
+        .loading-logo {
+            width: clamp(120px, 25vw, 200px);
+            height: auto;
+            order: 1;
+        }
 
-    .nav-brand{
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #fff;
-      font-weight: 700;
-      font-size: clamp(20px, 5vw, 28px); /* حجم خط مرن يتغير مع حجم الشاشة */
-    }
+        .loading-text {
+            font-size: clamp(50px, 12vw, 90px);
+            color: var(--blue-900);
+            font-weight: 900;
+            order: 2;
+            line-height: 1;
+        }
 
-    .nav-brand img{
-      width: clamp(50px, 10vw, 70px); /* حجم شعار مرن */
-      height: auto;
-      object-fit: contain;
-    }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+            50% {
+                transform: scale(1.03);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+        }
 
-    /* ===== CARD ===== */
-    .card{
-      background: rgba(255,255,255,0.94);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      /* جعل الكارد يتوسط الصفحة تلقائياً ويأخذ عرضاً مناسباً للجهاز */
-      width: 100%;
-      max-width: 450px; 
-      margin: auto; /* يتوسط عمودياً وأفقياً */
-      display: flex;
-      flex-direction: column;
-      min-height: 500px;
-    }
+        .fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-    .hero{
-      padding: 40px 20px;
-      text-align: center;
-      flex-grow: 1; /* يجعل محتوى الهيرو يأخذ المساحة المتاحة */
-    }
+        /* ===== التنسيقات العامة ===== */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(900px 500px at 70% 10%, rgba(255,255,255,.65), rgba(255,255,255,0)),
+                        linear-gradient(135deg, #dff0ff 0%, #bfe2ff 25%, #7fb9ff 55%, #2f6fe5 100%);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    .hero h2{
-      font-size: clamp(22px, 6vw, 28px);
-      color: var(--blue-900);
-      margin-bottom: 20px;
-      line-height: 1.4;
-    }
+        .app {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    .hero p{
-      font-size: clamp(16px, 4vw, 19px);
-      line-height: 1.6;
-      color: var(--muted);
-      margin: 15px 0;
-    }
+        /* ===== NAVBAR ===== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, .18);
+            border: 1px solid rgba(42, 102, 230, .25);
+            border-radius: 20px;
+            padding: 10px 20px;
+            backdrop-filter: blur(5px);
+        }
 
-    .hero-footer{
-      padding: 30px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            font-weight: 700;
+            font-size: clamp(20px, 5vw, 28px);
+        }
 
-    .btn{
-      border: 0;
-      padding: 16px 22px;
-      border-radius: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      font-size: 17px;
-      width: 100%;
-      transition: transform 0.2s;
-    }
+        .nav-brand img {
+            width: clamp(50px, 10vw, 70px);
+            height: auto;
+        }
 
-    .btn:active { transform: scale(0.98); }
+        /* ===== CARD ===== */
+        .card {
+            background: rgba(255, 255, 255, 0.94);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            width: 100%;
+            max-width: 450px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 500px;
+        }
 
-    .btn-primary{ background: var(--blue-600); color: white; }
-    .btn-outline{ background: white; color: var(--blue-700); border: 2px solid rgba(21,87,192,0.3); }
+        .hero {
+            padding: 40px 20px;
+            text-align: center;
+            flex-grow: 1;
+        }
 
-    /* ===== FOOTER ===== */
-    .footer{
-      margin-top: auto; 
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 18px;
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      text-align: center;
-    }
+        .hero h2 {
+            font-size: clamp(22px, 6vw, 28px);
+            color: var(--blue-900);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
 
-    .socials{
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
+        .hero p {
+            font-size: clamp(16px, 4vw, 19px);
+            line-height: 1.6;
+            color: var(--muted);
+            margin: 15px 0;
+        }
 
-    .socials a{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 45px;
-      height: 45px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.2);
-      transition: 0.3s;
-    }
+        .hero-footer {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-    .socials a:hover{ background: rgba(255,255,255,0.4); }
+        .btn {
+            border: 0;
+            padding: 16px 22px;
+            border-radius: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 17px;
+            width: 100%;
+            transition: transform 0.2s;
+        }
 
-    .socials img{ width: 24px; height: 24px; }
+        .btn:active {
+            transform: scale(0.98);
+        }
 
-    /* تحسينات للشاشات الصغيرة جداً */
-    @media(max-width: 480px){
-      body { padding: 10px; }
-      .hero { padding: 30px 15px; }
-      .footer { padding: 15px; }
-    }
-  </style>
+        .btn-primary {
+            background: var(--blue-600);
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--blue-700);
+            border: 2px solid rgba(21, 87, 192, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, .18);
+            border: 1px solid rgba(255, 255, 255, .25);
+            border-radius: 18px;
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 0 0 12px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .socials a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
+        }
+
+        .socials a:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .socials img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        @media(max-width: 480px) {
+            .loading-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="app">
-  <nav class="navbar">
-    <div class="nav-brand">
-      <img src="LOGO_MUEENK2.png" alt="Maeenak Logo">
-      <span>معينك</span>
-    </div>
-  </nav>
-
-  <div class="card">
-    <div class="hero">
-      <h2>منصة معينك لتسهيل طلب وصرف الأدوية</h2>
-      <p>قدّم طلبك بكل سهولة وبدون تسجيل دخول.</p>
-      <p>تابع حالة طلبك في أي وقت باستخدام رقم الهوية أو رقم الملف الطبي.</p>
+    <div id="loading-screen">
+        <div class="loading-content">
+            <img src="LOGO_MUEENK2.png" alt="لوقو معينك" class="loading-logo">
+            <div class="loading-text">مُعينك</div>
+        </div>
     </div>
 
-    <div class="hero-footer">
-      <a href="create-request.html"><button class="btn btn-primary">إنشاء طلب جديد</button></a>
-      <a href="track-request.html"><button class="btn btn-outline">متابعة طلب</button></a>
+    <div class="app">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <img src="LOGO_MUEENK2.png" alt="Maeenak Logo">
+                <span>مُعينك</span>
+            </div>
+        </nav>
+
+        <div class="card">
+            <div class="hero">
+                <h2>منصة معينك لتسهيل طلب وصرف الأدوية</h2>
+                <p>قدّم طلبك بكل سهولة وبدون تسجيل دخول.</p>
+                <p>تابع حالة طلبك في أي وقت باستخدام رقم الهوية أو رقم الملف الطبي.</p>
+            </div>
+
+            <div class="hero-footer">
+                <a href="create-request.html">
+                    <button class="btn btn-primary">إنشاء طلب جديد</button>
+                </a>
+                <a href="track-request.html">
+                    <button class="btn btn-outline">متابعة طلب</button>
+                </a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>تواصل معنا</p>
+            <div class="socials">
+                <a href="https://www.instagram.com/6arq0/" title="Instagram">
+                    <img src="ICONS/Instagram_logo_2022.svg" alt="IG">
+                </a>
+                <a href="#" title="Twitter / X">
+                    <img src="ICONS/X_logo_2023.svg" alt="X">
+                </a>
+                <a href="https://wa.me/966500000000" title="WhatsApp">
+                    <img src="ICONS/WhatsApp_logo-color-vertical.svg" alt="WA">
+                </a>
+                <a href="mailto:info@mueenk.com" title="Email">
+                    <img src="ICONS/gmail.png" alt="Email">
+                </a>
+            </div>
+        </footer>
     </div>
-  </div>
-   <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <p>تواصل معنا</p>
-    <div class="socials">
-      <a href="https://www.instagram.com/6arq0/" title="Instagram">
-        <img src="Instagram_logo_2022.svg" alt="Instagram">
-      </a>
-      <a href="#" title="Twitter / X">
-        <img src="X_logo_2023.svg" alt="Instagram">
-      </a>
-      <a href="https://wa.me/966500000000" title="WhatsApp">
-        <img src="WhatsApp_logo-color-vertical.svg" alt="Instagram">
-      </a>
-      <a href="mailto:info@mueenk.com" title="Email">
-        <img src="gmail.png" alt="Instagram">
-      </a>
-    </div>
-  </footer>
-</div>
+
+    <script>
+        // منع الوميض إذا كانت الشاشة قد عُرضت سابقاً
+        (function() {
+            if (sessionStorage.getItem('splashShown')) {
+                document.write('<style>#loading-screen { display: none !important; }</style>');
+            }
+        })();
+
+        // إدارة شاشة التحميل عند تحميل الصفحة
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loading-screen');
+            
+            if (!sessionStorage.getItem('splashShown')) {
+                setTimeout(function() {
+                    loader.classList.add('fade-out');
+                    sessionStorage.setItem('splashShown', 'true');
+                }, 2000);
+            } else {
+                loader.style.display = 'none';
+            }
+        });
+    </script>
 
 </body>
 </html>
-
